@@ -4,59 +4,65 @@ namespace DiceRolling
 {
     class Program
     {
+
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the Grand Circus Casino! Roll the dice? (y/n) ");
-            string userInput = Console.ReadLine();
+            string userInput;
+            int numberOfSides;
 
+            Console.WriteLine("Welcome to the Grand Circus Casino!\nRoll the dice? (y/n)");
+            userInput = Console.ReadLine().ToLower();
+
+            if (userInput != "y" && userInput != "n")
+            {
+                Console.WriteLine("\nPlease enter a valid answer (y/n)!");
+                userInput = Console.ReadLine().ToLower();
+            }
             while (userInput == "y")
             {
-                if (userInput == "y")
+                Console.WriteLine("\nHow many sides should each die have?");
+                numberOfSides = int.Parse(Console.ReadLine());
+
+                if (numberOfSides > 1 && numberOfSides <= 6)
                 {
-                    Console.WriteLine("How many sides should each die have?");
-                    int numberOfSides = int.Parse(Console.ReadLine());
+                    int userRoll = DiceRollerApp.RandomNumber(numberOfSides);
+                    int computerRoll = DiceRollerApp.RandomNumber(numberOfSides);
+                    Console.WriteLine("You rolled: " + userRoll);
+                    Console.WriteLine("Computer rolled: " + computerRoll);
 
-
-                    Random rnd = new Random();
-
-                    int dice1 = rnd.Next(1, numberOfSides);
-                    int dice2 = rnd.Next(1, 7);
-
-                    Console.WriteLine($"Dice 1: {dice1}");
-                    Console.WriteLine($"Dice 2: {dice2}");
-
-                    if (dice1 > dice2)
+                    if (userRoll > computerRoll)
                     {
-                        Console.WriteLine("Dice 1 wins!");
+                        Console.WriteLine("You won!");
                     }
-                    else if (dice1 < dice2)
+                    else if (userRoll < computerRoll)
                     {
-                        Console.WriteLine("Dice 2 wins!");
+                        Console.WriteLine("You lost!  Computer won!");
                     }
                     else
                     {
-                        Console.WriteLine("Draw!");
+                        Console.WriteLine("Tie.");
                     }
-                }
-                else if (userInput == "n")
-                {
-                    Console.WriteLine("Come back soon!");
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a valid input. (y/n)");
-                }
-                string playAgain = "";
-                Console.WriteLine("Do you want to play again? (y/n)");
-                playAgain = Console.ReadLine();
-                if (playAgain == "n")
-                {
-                    Console.WriteLine("Thank you for playing!");
-                    break;
+                    Console.WriteLine("\nPlease enter a valid number between 1 and 6!");
                 }
 
+                Console.WriteLine("\nDo you want to roll again?");
+                userInput = Console.ReadLine().ToLower();
+
+                if (userInput == "n")
+                {
+                    Console.WriteLine("\nThank you for playing!");
+                }
             }
+
+
+            Console.ReadKey();
         }
-        
+
+
+
     }
 }
